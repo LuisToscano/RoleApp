@@ -1,0 +1,37 @@
+<ion-toolbar dark>
+  <ion-title>Prueba de dados</ion-title>
+   
+   <ion-buttons end>
+    <button (click)="showCoinModal()">
+      <ion-icon name="md-help-circle"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content class="dice-content">
+  <ion-list>
+    <ion-item>
+      <button class="width100" dark large clear (click)="throwDice()">
+        Lanzar
+      </button>
+    </ion-item>
+    <ion-item *ngFor="#dice of dices; #i = index">
+      <ion-row class="cell-center">
+        <ion-col>
+            <div class="dice-layer">
+                <div class="dice-arrow left" (click)="removeDice(i)"><ion-icon name="arrow-back"></ion-icon></div>
+                <div class="dice-content">
+                  <div class="dice-img"><img [src]="dice.img"></div>
+                  <div class="dice-tag">{{dice.tag}}</div>
+                </div>
+                <div class="dice-arrow right" (click)="addDice(i)"><ion-icon name="arrow-forward"></ion-icon></div>
+            </div>
+        </ion-col>
+        <ion-col>
+          <div class="dice-count text-center">{{dice.cant}}</div>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+    <div class="new-dice text-right" (click)="showNewDiceModal()">Crea uno nuevo (+)</div>
+  </ion-list>
+</ion-content>

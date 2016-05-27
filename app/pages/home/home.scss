@@ -1,0 +1,63 @@
+.dice-content{
+    ion-label{
+        margin: 0px;
+    }
+    
+    .dice-layer{
+        &>div{
+            display: inline-block;
+        }
+        
+        .dice-arrow{
+            width: 25%;
+            height: 75px;
+            position: relative;
+            
+            &.left{
+               text-align: right;
+               ion-icon{
+                   right:10px;
+               }   
+            }
+            
+            &.right{
+               text-align: left; 
+               ion-icon{
+                   left:10px;
+               }   
+            }
+            
+            ion-icon{
+               position: absolute;
+               top: 25px;
+               font-size: 30px;
+            }
+        }
+        
+        .dice-content{
+            width: 50%;  
+            text-align: center; 
+            .dice-img{
+               img{
+                   height: 50px;
+                   width: 50px;
+               }  
+            }
+        }
+    }
+    
+    .dice-count{
+        width: 100%;
+        font-size: 30px;
+        font-weight: bold;
+        padding-top: 25px;
+    }
+    
+    .new-dice{
+        width: 100%;
+        color: dimgray;
+        font-style: italic;
+        margin-top: 10px;
+        font-size: 1.5rem;
+    }
+}

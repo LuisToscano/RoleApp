@@ -1,0 +1,18 @@
+
+<ion-toolbar light>
+  <ion-title>Moneda</ion-title>
+  <ion-buttons start>
+    <button (click)="close()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </button>
+  </ion-buttons>
+  <ion-buttons end *ngIf="resultado.length > 0">
+    <button (click)="reload()">
+      <ion-icon name="refresh"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content padding class="modal-coin">
+  <div class="coin-result text-center">{{resultado}}</div>
+</ion-content>

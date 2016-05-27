@@ -1,0 +1,17 @@
+
+<ion-toolbar light>
+  <ion-title>Resultados</ion-title>
+  <ion-buttons start>
+    <button (click)="close()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </button>
+  </ion-buttons>
+  <ion-buttons end *ngIf="results.length > 0">
+    <button (click)="reload()">
+      <ion-icon name="refresh"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-toolbar>
+<ion-content padding class="modal-dice">
+  <div [innerHTML]="answersHTML"></div>
+</ion-content>

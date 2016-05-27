@@ -1,0 +1,8 @@
+{
+    "diceArray" : [
+        {"faces": 4, "tag": "4 caras", "img": "img/4dice.png", "cant": 0},
+        {"faces": 6, "tag": "6 caras", "img": "img/6dice.png", "cant": 0},
+        {"faces": 10, "tag": "10 caras", "img": "img/10dice.png", "cant": 0},
+        {"faces": 20, "tag": "20 caras", "img": "img/20dice.png", "cant": 0}
+    ]
+}
