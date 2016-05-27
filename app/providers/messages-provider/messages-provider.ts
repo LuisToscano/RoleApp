@@ -13,22 +13,27 @@ export class MessagesProvider {
   data: any = null;
 
   constructor(public http: Http) {}
-
-  load() {
-    if (this.data) {
-      // already loaded data
-      return Promise.resolve(this.data);
+  
+  public messages = {
+    'general' :{
+      'loading' : 'Cargando...'
+    },
+    'home' :  {
+        'title' : 'Prueba de dados',
+        'newDice' : 'Crea uno nuevo (+)'
+    },
+    'modalCoin':{
+      'title' : 'Moneda',
+      'heads' : 'Cara',
+      'tails' : 'Sello'
+    },
+    'modalDice' : {
+      'title' : 'Resultados',
+      'noDiceError' : 'No se han seleccionado dados'
+    },
+    'modalNewDice' : {
+      'title' : 'Crear dado'
     }
-
-    // don't have the data yet
-    return new Promise(resolve => {
-      this.http.get('data/messages.json')
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = data;
-          resolve(this.data);
-        });
-    });
   }
 }
 

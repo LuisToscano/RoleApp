@@ -1,5 +1,5 @@
 <ion-toolbar dark>
-  <ion-title>Prueba de dados</ion-title>
+  <ion-title>{{messages.home.title}}</ion-title>
    
    <ion-buttons end>
     <button (click)="showCoinModal()">
@@ -32,6 +32,6 @@
         </ion-col>
       </ion-row>
     </ion-item>
-    <div class="new-dice text-right" (click)="showNewDiceModal()">Crea uno nuevo (+)</div>
+    <div class="new-dice text-right" (click)="showNewDiceModal()">{{messages.home.newDice}}</div>
   </ion-list>
 </ion-content>

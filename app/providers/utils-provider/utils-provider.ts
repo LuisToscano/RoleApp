@@ -13,22 +13,20 @@ export class UtilsProvider {
   data: any = null;
 
   constructor(public http: Http) {}
-
-  load() {
-    if (this.data) {
-      // already loaded data
-      return Promise.resolve(this.data);
+  
+  config = {
+    'dices' : {
+           'MAX_DICES' : 10,
+           'MIN_DICES' : 0
     }
-
-    // don't have the data yet
-    return new Promise(resolve => {
-      this.http.get('data/utils.json')
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = data;
-          resolve(this.data);
-        });
-    });
+  };
+  
+   variableExists(check : any){
+    return check!==null && typeof(check)!=='undefined';
+  }
+  
+  getRandomNumber(topLimit : number){
+    return Math.floor(Math.random() * topLimit) + 1
   }
 }
 

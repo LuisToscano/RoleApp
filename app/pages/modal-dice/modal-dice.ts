@@ -1,10 +1,11 @@
 import {Page, Modal, ViewController, NavParams} from 'ionic-angular';
 import {Dice} from '../../classes/dice'; 
-import {MathProvider} from '../../providers/math-provider/math-provider'; 
+import {UtilsProvider} from '../../providers/utils-provider/utils-provider'; 
+import {MessagesProvider} from '../../providers/messages-provider/messages-provider'; 
 
 @Page({
   templateUrl: "build/pages/modal-dice/modal-dice.html",
-  providers: [MathProvider]
+  providers: [UtilsProvider, MessagesProvider]
 })
 
 export class ModalDice {
@@ -13,9 +14,11 @@ export class ModalDice {
   private dices : Dice[];
   private results : number[];
   private answersHTML : string;
+  private messages;
   
-  constructor(viewCtrl: ViewController, params: NavParams, private myMath : MathProvider) {
-    this.answersHTML = 'Cargando...',
+  constructor(viewCtrl: ViewController, params: NavParams, private utilsProv : UtilsProvider, private msgProv : MessagesProvider) {
+    this.messages = msgProv.messages;
+    this.answersHTML = this.messages.general.loading,
     this.viewCtrl =   viewCtrl,
     this.dices    =   params.get('dices');
     this.reload();
@@ -33,16 +36,16 @@ export class ModalDice {
      colStartSuccess =    '<ion-col class="success">',
      colStartFail     =   '<ion-col class="fail">',
      colEnd =             '</ion-col>',
-     noDiceErrorMsg =     'No se han seleccionado dados',
+     noDiceErrorMsg =     this.messages.modalDice.noDiceError,
      strAnswer = '',
      resultsPerRow = 4;
      
      if(this.results.length > 0){
         strAnswer = rowStart;
-        var cont = 0;
+        let cont = 0;
         for(var i=0; i < this.results.length; i++){
           cont++;
-          var result = this.results[i];
+          let result = this.results[i];
           
           switch(result){
             case 1:{
@@ -91,7 +94,7 @@ export class ModalDice {
         this.dices.forEach(function(dice) {
             if(dice.cant > 0){
                for(var i=0; i<dice.cant; i++){
-                   results.push(that.myMath.getRandomNumber(dice.faces)); 
+                   results.push(that.utilsProv.getRandomNumber(dice.faces)); 
                }
             }
         });

@@ -13,23 +13,11 @@ import {ModalNewDice} from '../../pages/modal-new-dice/modal-new-dice';
 })
 export class HomePage {  
     private dices;
-    private messages = {};
-    private utils = {};
-    private static MAX_DICES = 10;
-    private static MIN_DICES = 0;
+    private messages;
 
     constructor(private nav: NavController, private diceProv : DiceProvider, private msgProv : MessagesProvider, private utilsProv : UtilsProvider) {
-        
         let that = this;
-        
-        msgProv.load().then(function(data){
-            that.utils = data;
-        });
-        
-        msgProv.load().then(function(data){
-            that.messages = data.home;
-        });
-        
+        this.messages = msgProv.messages;
         diceProv.load().then(function(data){
             that.dices = data.diceArray;
         });
@@ -41,7 +29,7 @@ export class HomePage {
     * @method addDice
     */
     addDice(index){
-        if(this.dices[index].cant < HomePage.MAX_DICES){
+        if(this.dices[index].cant < this.utilsProv.config.dices.MAX_DICES){
             this.dices[index].cant = this.dices[index].cant + 1;
         }
     }
@@ -52,7 +40,7 @@ export class HomePage {
     * @method removeDice
     */
     removeDice(index){       
-       if(this.dices[index].cant > HomePage.MIN_DICES){
+       if(this.dices[index].cant > this.utilsProv.config.dices.MIN_DICES){
             this.dices[index].cant = this.dices[index].cant - 1;
        }
     }

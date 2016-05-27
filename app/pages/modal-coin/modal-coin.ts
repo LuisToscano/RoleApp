@@ -1,16 +1,21 @@
 import {Page, Modal, ViewController} from 'ionic-angular';
-import {MathProvider} from '../../providers/math-provider/math-provider'; 
+import {UtilsProvider} from '../../providers/utils-provider/utils-provider'; 
+import {MessagesProvider} from '../../providers/messages-provider/messages-provider'; 
 
 @Page({
   templateUrl: 'build/pages/modal-coin/modal-coin.html',
-  providers: [MathProvider]
+  providers: [UtilsProvider, MessagesProvider]
 })
 export class ModalCoin {
   public viewCtrl;
   private resultado : string;
+  private messages;
+  
+  private static FACES =  2;
 
-  constructor(viewCtrl: ViewController, private myMath : MathProvider) {
-    this.viewCtrl = viewCtrl;
+  constructor(viewCtrl: ViewController, private utilsProv : UtilsProvider, private msgProvider : MessagesProvider) {
+    this.viewCtrl = viewCtrl,
+    this.messages = msgProvider.messages;
     this.reload();
   }
   
@@ -21,17 +26,17 @@ export class ModalCoin {
   */
   getCoinResult(){
 
-      let result = this.myMath.getRandomNumber(2),
+      let result = this.utilsProv.getRandomNumber(ModalCoin.FACES),
       respuesta = '';
       
       switch(result){
         case 1: {
-          respuesta = 'Cara';
+          respuesta = this.messages.modalCoin.heads;
           break;
         }
         
         case 2: {
-          respuesta = 'Sello';
+          respuesta = this.messages.modalCoin.tails;
           break;
         }
       }
