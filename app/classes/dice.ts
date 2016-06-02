@@ -1,6 +1,9 @@
 export class Dice {
   faces: number;
-  tag: string;
   img: string;
   cant: number;
+  
+  public static equals(diceA : Dice, diceB : Dice){
+    return diceA.faces === diceB.faces;
+  }
 }

@@ -2,25 +2,26 @@ import {Injectable} from 'angular2/core';
 import {Http} from 'angular2/http';
 import 'rxjs/add/operator/map';
 
-/*
-  Generated class for the MessagesProvider provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
 export class MessagesProvider {
   data: any = null;
 
   constructor(public http: Http) {}
   
-  public messages = {
+  public getMessages(){
+    return this.messages;
+  }
+  
+  private messages = {
     'general' :{
       'loading' : 'Cargando...'
     },
     'home' :  {
         'title' : 'Prueba de dados',
-        'newDice' : 'Crea uno nuevo (+)'
+        'newDice' : 'Crear dado',
+        'coin' : 'Moneda',
+        'percent' : 'Porcentaje',
+        'diceTag' : '{0} caras'
     },
     'modalCoin':{
       'title' : 'Moneda',
@@ -32,7 +33,11 @@ export class MessagesProvider {
       'noDiceError' : 'No se han seleccionado dados'
     },
     'modalNewDice' : {
-      'title' : 'Crear dado'
+      'title' : 'Crear dado',
+      'labelDiceName' : 'Nombre del dado',
+      'labelDiceFaces': 'Número de caras',
+      'submitButtonTag' : 'Crear dado',
+      'diceAlreadyExistsError' : 'Ya existe un dado con el mismo nombre o número de caras'
     }
   }
 }

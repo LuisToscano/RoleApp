@@ -2,27 +2,22 @@
   <ion-title>{{messages.home.title}}</ion-title>
    
    <ion-buttons end>
-    <button (click)="showCoinModal()">
-      <ion-icon name="md-help-circle"></ion-icon>
+    <button (click)="throwDice()">
+      <ion-icon name="add"></ion-icon>
     </button>
   </ion-buttons>
 </ion-toolbar>
 
 <ion-content class="dice-content">
   <ion-list>
-    <ion-item>
-      <button class="width100" dark large clear (click)="throwDice()">
-        Lanzar
-      </button>
-    </ion-item>
-    <ion-item *ngFor="#dice of dices; #i = index">
+    <ion-item *ngFor="#dice of dices ; #i = index ">
       <ion-row class="cell-center">
         <ion-col>
             <div class="dice-layer">
                 <div class="dice-arrow left" (click)="removeDice(i)"><ion-icon name="arrow-back"></ion-icon></div>
                 <div class="dice-content">
                   <div class="dice-img"><img [src]="dice.img"></div>
-                  <div class="dice-tag">{{dice.tag}}</div>
+                  <div class="dice-tag">{{getDiceTag(i)}}</div>
                 </div>
                 <div class="dice-arrow right" (click)="addDice(i)"><ion-icon name="arrow-forward"></ion-icon></div>
             </div>
@@ -32,6 +27,37 @@
         </ion-col>
       </ion-row>
     </ion-item>
-    <div class="new-dice text-right" (click)="showNewDiceModal()">{{messages.home.newDice}}</div>
+    
+    <ion-item *ngFor="#dice of userDices ; #i = index ">
+      <ion-row class="cell-center">
+        <ion-col>
+            <div class="dice-layer">
+                <div class="dice-arrow left" (click)="removeDice(i)"><ion-icon name="arrow-back"></ion-icon></div>
+                <div class="dice-content">
+                  <div class="dice-img"><img [src]="dice.img"></div>
+                  <div class="dice-tag">{{getUserDiceTag(i)}}</div>
+                </div>
+                <div class="dice-arrow right" (click)="addDice(i)"><ion-icon name="arrow-forward"></ion-icon></div>
+            </div>
+        </ion-col>
+        <ion-col>
+          <div class="dice-count text-center">{{dice.cant}}</div>
+        </ion-col>
+      </ion-row>
+    </ion-item>
   </ion-list>
 </ion-content>
+
+<ion-toolbar position="bottom" dark>
+  <ion-segment light>
+    <ion-segment-button (click)="showCoinModal()">
+      {{messages.home.coin}}
+    </ion-segment-button>
+    <ion-segment-button>
+      {{messages.home.percent}}
+    </ion-segment-button>
+    <ion-segment-button (click)="showNewDiceModal()">
+      {{messages.home.newDice}}
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>

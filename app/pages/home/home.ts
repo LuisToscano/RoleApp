@@ -6,21 +6,39 @@ import {UtilsProvider} from '../../providers/utils-provider/utils-provider';
 import {ModalDice} from '../../pages/modal-dice/modal-dice'; 
 import {ModalCoin} from '../../pages/modal-coin/modal-coin'; 
 import {ModalNewDice} from '../../pages/modal-new-dice/modal-new-dice';  
+import {OrderBy} from '../../pipes/order-by';  
 
 @Page({
     templateUrl: 'build/pages/home/home.html',
-    providers: [DiceProvider, MessagesProvider, UtilsProvider]
+    providers: [DiceProvider, MessagesProvider, UtilsProvider],
+    pipes : [OrderBy]
 })
 export class HomePage {  
     private dices;
+    private userDices : Dice[];
     private messages;
+    private config;
 
-    constructor(private nav: NavController, private diceProv : DiceProvider, private msgProv : MessagesProvider, private utilsProv : UtilsProvider) {
+    constructor(private nav: NavController, private diceProv : DiceProvider, private msgProv : MessagesProvider, private utilsProv : UtilsProvider) {}
+    
+    ngOnInit(){
         let that = this;
-        this.messages = msgProv.messages;
-        diceProv.load().then(function(data){
-            that.dices = data.diceArray;
+        this.messages = this.msgProv.getMessages();
+        this.config = this.utilsProv.getConfig();
+        this.dices = this.diceProv.getDefaultDices();
+        this.diceProv.load().then(function(data){
+            that.userDices = data;
         });
+    }
+    
+    getDiceTag(index){
+        let dice = this.dices[index];
+        return String.format(this.messages.home.diceTag, dice.faces);
+    }
+    
+    getUserDiceTag(index){
+        let dice = this.userDices[index];
+        return String.format(this.messages.home.diceTag, dice.faces);
     }
     
     /*
@@ -29,7 +47,7 @@ export class HomePage {
     * @method addDice
     */
     addDice(index){
-        if(this.dices[index].cant < this.utilsProv.config.dices.MAX_DICES){
+        if(this.dices[index].cant < this.config.dices.MAX_DICES){
             this.dices[index].cant = this.dices[index].cant + 1;
         }
     }
@@ -40,7 +58,7 @@ export class HomePage {
     * @method removeDice
     */
     removeDice(index){       
-       if(this.dices[index].cant > this.utilsProv.config.dices.MIN_DICES){
+       if(this.dices[index].cant > this.config.dices.MIN_DICES){
             this.dices[index].cant = this.dices[index].cant - 1;
        }
     }
@@ -82,7 +100,10 @@ export class HomePage {
     * @method showDiceModal
     */
     showNewDiceModal() {
-        let modalNewDice = Modal.create(ModalNewDice);
+        let params = {
+            diceProv : this.diceProv
+        };
+        let modalNewDice = Modal.create(ModalNewDice, params);
         this.nav.present(modalNewDice);
     }
 }

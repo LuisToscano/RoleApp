@@ -7,15 +7,15 @@ import {MessagesProvider} from '../../providers/messages-provider/messages-provi
   providers: [UtilsProvider, MessagesProvider]
 })
 export class ModalCoin {
-  public viewCtrl;
   private resultado : string;
   private messages;
   
   private static FACES =  2;
 
-  constructor(viewCtrl: ViewController, private utilsProv : UtilsProvider, private msgProvider : MessagesProvider) {
-    this.viewCtrl = viewCtrl,
-    this.messages = msgProvider.messages;
+  constructor(public viewCtrl: ViewController, private utilsProv : UtilsProvider, private msgProvider : MessagesProvider) {}
+  
+  ngOnInit(){
+    this.messages = this.msgProvider.getMessages();
     this.reload();
   }
   

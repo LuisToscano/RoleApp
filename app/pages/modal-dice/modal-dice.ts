@@ -10,17 +10,17 @@ import {MessagesProvider} from '../../providers/messages-provider/messages-provi
 
 export class ModalDice {
   
-  public viewCtrl;
   private dices : Dice[];
   private results : number[];
   private answersHTML : string;
   private messages;
   
-  constructor(viewCtrl: ViewController, params: NavParams, private utilsProv : UtilsProvider, private msgProv : MessagesProvider) {
-    this.messages = msgProv.messages;
+  constructor(public viewCtrl: ViewController, private params: NavParams, private utilsProv : UtilsProvider, private msgProv : MessagesProvider) {}
+  
+  ngOnInit(){
+    this.messages = this.msgProv.getMessages();
     this.answersHTML = this.messages.general.loading,
-    this.viewCtrl =   viewCtrl,
-    this.dices    =   params.get('dices');
+    this.dices    =   this.params.get('dices');
     this.reload();
   }
   
