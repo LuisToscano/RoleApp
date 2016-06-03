@@ -64,6 +64,18 @@ export class HomePage {
     }
     
     /*
+    * Agrega un dado del tipo seleccionado.
+    * @param [number] index : índice del tipo de dado seleccionado.
+    * @method addDice
+    */
+    deleteDice(index){
+       let oldDice = this.userDices[index];
+       this.diceProv.removeDice(oldDice).then(success => {
+           if(success){/* SUCCESSFULLY DELETED*/}else{ /* ERROR OCCURED */}
+       });
+    }
+    
+    /*
     * Muestra modal de resultados.
     * @method throwDice
     */

@@ -35,22 +35,72 @@ export class DiceProvider {
   }
   
   addDice(newDice : Dice){
+    let that = this;
     return new Promise(resolve => {
-        this.data.userDices.push(newDice);
-        window.localStorage.setItem(this.config.localStorage.userDicesTag, JSON.stringify(this.data));
-        resolve(true);
+        that.diceAlreadyExists(newDice).then(exists =>{
+          if(exists){
+            resolve(false);
+          }else{
+            that.data.userDices.push(newDice);
+            window.localStorage.setItem(that.config.localStorage.userDicesTag, JSON.stringify(that.data));
+            resolve(true); 
+          }
+        });
     });  
+  }
+  
+  removeDice(oldDice : Dice){
+    let that = this;
+    return new Promise(resolve => {
+        let index = that.userDiceExists(oldDice);
+        if(index<0){
+          resolve(false);
+        }else{
+          that.data.userDices.splice(index, 1 );
+          window.localStorage.setItem(that.config.localStorage.userDicesTag, JSON.stringify(that.data));
+          resolve(true);          
+        }
+    });  
+  }
+  
+  diceAlreadyExists(testDice){
+    let that = this;
+    return new Promise(resolve => {
+        resolve(that.defaultDiceExists(testDice)>=0  || that.userDiceExists(testDice)>=0);
+      }
+    );  
+  }
+  
+  defaultDiceExists(testDice){
+    console.log(this.defaultDices);
+      for(let i = 0; i < this.defaultDices.length; i++){
+        console.log(testDice, this.defaultDices[i], Dice.equals(testDice, this.defaultDices[i]));
+        if(Dice.equals(testDice, this.defaultDices[i])){
+          return i;
+        }
+      }
+      return -1;
+  }
+  
+  userDiceExists(testDice){
+     let userDices = this.data.userDices;
+      for(let i = 0; i < userDices.length; i++){
+        if(Dice.equals(testDice, userDices[i])){
+          return i;
+        }
+      }
+      return -1;
   }
   
   getDefaultDices(){
     return this.defaultDices;
   }
   
-    private defaultDices = [
-        {"faces": 4, "tag": "4 caras", "img": "img/4dice.png", "cant": 0},
-        {"faces": 6, "tag": "6 caras", "img": "img/6dice.png", "cant": 0},
-        {"faces": 10, "tag": "10 caras", "img": "img/10dice.png", "cant": 0},
-        {"faces": 20, "tag": "20 caras", "img": "img/20dice.png", "cant": 0}
+    private defaultDices : Dice[] = [
+        {'faces': 4,  'img': 'img/4dice.png',  'cant': 0},
+        {'faces': 6,  'img': 'img/6dice.png',  'cant': 0},
+        {'faces': 10, 'img': 'img/10dice.png', 'cant': 0},
+        {'faces': 20, 'img': 'img/20dice.png', 'cant': 0}
     ];
 }
 

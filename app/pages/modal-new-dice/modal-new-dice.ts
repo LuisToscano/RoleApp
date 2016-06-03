@@ -24,40 +24,13 @@ export class ModalNewDice {
   
   onSubmit(){
     let that = this;
-    this.diceAlreadyExists(this.newDice).then(exists => {
-      if(exists){
-        alert(that.messages.modalNewDice.diceAlreadyExistsError);
-      }else{
-        that.diceProv.addDice(that.newDice).then(
-          success => {  if(success){that.close();} else {/* ERROR SAVING DICE */} }
-        );
-      }
-    })
+    that.diceProv.addDice(that.newDice).then(
+      success => {  if(success){that.close();} else {/* ERROR SAVING DICE */} }
+    );
   }
   
   resetNewDice(){
     this.newDice = this.utilsProv.getConfig().dices.default;
-  }
-  
-  diceAlreadyExists(testDice){
-    let that = this;
-    return new Promise(resolve => {
-        let defaultDices = that.diceProv.getDefaultDices();
-        for(let i = 0; i<defaultDices.length; i++){
-          if(Dice.equals(testDice, defaultDices[i])){
-            resolve(true); 
-          }
-        }
-        
-        that.diceProv.load().then(data => {
-          for(let i = 0; i<data.length; i++){
-            if(Dice.equals(testDice, data[i])){
-              resolve(true); 
-            }
-          }
-          resolve(false); 
-        })
-    });  
   }
   
   /*
